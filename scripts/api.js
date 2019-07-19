@@ -7,8 +7,22 @@ const api = (function() {
     const result = fetch(baseURL+'/items');
     return result;
   }
-  return {
-    getItems
-    
+
+  function createItem(name) {
+    const newItem = JSON.stringify({name});
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: newItem 
+    };
+    return fetch(baseURL+'/items', options);
   }
+
+  return {
+    getItems,
+    createItem
+    
+  };
 }());
