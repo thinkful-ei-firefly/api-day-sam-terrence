@@ -1,5 +1,6 @@
 'use strict';
 
+// eslint-disable-next-line no-unused-vars
 const api = (function() {
   const baseURL = 'https://thinkful-list-api.herokuapp.com/sam';
   
