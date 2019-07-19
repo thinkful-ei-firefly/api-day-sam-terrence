@@ -59,6 +59,11 @@ const shoppingList = (function(){
   
     // insert that HTML into the DOM
     $('.js-shopping-list').html(shoppingListItemsString);
+
+    if (store.error.length > 0) {
+      alert('Error, code: '+store.error);
+    }
+    
   }
   
   
@@ -68,11 +73,17 @@ const shoppingList = (function(){
       const newItemName = $('.js-shopping-list-entry').val();
       $('.js-shopping-list-entry').val('');
       api.createItem(newItemName)
-        .then(res => res.json())
+        .then(res => {
+          if (!res.ok) {
+            store.error.push(res.status);
+          }
+          return res.json();
+        })
         .then((newItem) => {
           if(newItem.name !==undefined){store.addItem(newItem);}
           render();
         });
+
     });
   }
   
@@ -87,6 +98,12 @@ const shoppingList = (function(){
       const id = getItemIdFromElement(event.currentTarget);
       const item = store.findById(id);
       api.updateItem(id, {checked: !item.checked})
+        .then(res => {
+          if (!res.ok) {
+            store.error.push( {code: res.status});
+          }
+          return res.json();
+        })
         .then(store.findAndUpdate(id, {checked: !item.checked}))
         .then(render());
     });
@@ -98,6 +115,12 @@ const shoppingList = (function(){
       // get the index of the item in store.items
       const id = getItemIdFromElement(event.currentTarget);
       api.deleteItem(id)
+        .then(res => {
+          if (!res.ok) {
+            store.error.push( {code: res.status});
+          }
+          return res.json();
+        })
         .then(store.findAndDelete(id)) 
         .then(render());
     });
@@ -109,6 +132,12 @@ const shoppingList = (function(){
       const id = getItemIdFromElement(event.currentTarget);
       const itemName = $(event.currentTarget).find('.shopping-item').val();
       api.updateItem(id, {name: itemName})
+        .then(res => {
+          if (!res.ok) {
+            store.error.push( {code: res.status});
+          }
+          return res.json();
+        })
         .then(store.findAndUpdate(id, {name: itemName}))
         .then(store.setItemIsEditing(id, false))
         .then(render());

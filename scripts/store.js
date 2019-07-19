@@ -1,6 +1,8 @@
 'use strict';
 /* global */
 // eslint-disable-next-line no-unused-vars
+let error = [];
+
 const store = (function(){
   const addItem = function(item) {
     this.items.push(item);
@@ -36,7 +38,7 @@ const store = (function(){
     items: [],
     hideCheckedItems: false,
     searchTerm: '',
-
+    error,
     addItem,
     findById,
     toggleCheckedFilter,
