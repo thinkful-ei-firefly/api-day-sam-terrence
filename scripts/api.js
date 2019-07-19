@@ -20,9 +20,23 @@ const api = (function() {
     return fetch(baseURL+'/items', options);
   }
 
+  function updateItem(id,updateData){
+    const updateItem = JSON.stringify({updateData});
+    const options = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: updateItem
+    };
+    return fetch(baseURL+'/items/'+id, options);
+
+  }
+
   return {
     getItems,
-    createItem
+    createItem,
+    updateItem
     
   };
 }());

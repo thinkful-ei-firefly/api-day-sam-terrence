@@ -70,7 +70,7 @@ const shoppingList = (function(){
       api.createItem(newItemName)
         .then(res => res.json())
         .then((newItem) => {
-          store.addItem(newItem);
+          if(newItem.name !==undefined){store.addItem(newItem);}
           render();
         });
     });
