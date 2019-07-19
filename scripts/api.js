@@ -21,7 +21,7 @@ const api = (function() {
   }
 
   function updateItem(id,updateData){
-    const updateItem = JSON.stringify({updateData});
+    const updateItem = JSON.stringify(updateData);
     const options = {
       method: 'PATCH',
       headers: {
